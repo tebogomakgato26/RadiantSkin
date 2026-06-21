@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 /*
 Makgato Tebogo 230116086
 */
+
 @Entity
 public class Payment {
     @Id
@@ -17,15 +18,20 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     protected Payment() {
     }
 
     public Payment(Builder builder) {
         this.paymentId = builder.paymentId;
         this.amount = builder.amount;
-        this. transactionReference = builder.transactionReference;
+        this.transactionReference = builder.transactionReference;
         this.paymentStatus = builder.paymentStatus;
         this.paymentMethod = builder.paymentMethod;
+        this.order = builder.order;
     }
 
     public Long getPaymentID() {
@@ -48,6 +54,10 @@ public class Payment {
         return paymentMethod;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
     @Override
     public String toString() {
         return "Payment{" +
@@ -56,45 +66,52 @@ public class Payment {
                 ", transactionReference='" + transactionReference + '\'' +
                 ", paymentStatus=" + paymentStatus +
                 ", paymentMethod=" + paymentMethod +
+                ", order=" + (order != null ? order.getOrderId() : null) +
                 '}';
     }
 
-    public static class Builder{
+    public static class Builder {
         private Long paymentId;
         private double amount;
         private String transactionReference;
         private PaymentStatus paymentStatus;
         private PaymentMethod paymentMethod;
+        private Order order;
 
-        public Builder setPaymentId(Long paymentId){
+        public Builder setPaymentId(Long paymentId) {
             this.paymentId = paymentId;
             return this;
         }
-        public Builder setAmount(double amount){
+        public Builder setAmount(double amount) {
             this.amount = amount;
             return this;
         }
-        public Builder setTransactionReference(String transactionReference){
+        public Builder setTransactionReference(String transactionReference) {
             this.transactionReference = transactionReference;
             return this;
         }
-        public Builder setPaymentStatus(PaymentStatus paymentStatus){
+        public Builder setPaymentStatus(PaymentStatus paymentStatus) {
             this.paymentStatus = paymentStatus;
             return this;
         }
-        public Builder setPaymentMethod(PaymentMethod paymentMethod){
+        public Builder setPaymentMethod(PaymentMethod paymentMethod) {
             this.paymentMethod = paymentMethod;
             return this;
         }
-        public Builder copy(Payment payment){
-            this.paymentId = payment.paymentId;
-            this.amount = payment.amount;
-            this. transactionReference = payment.transactionReference;
-            this.paymentStatus = payment.paymentStatus;
-            this.paymentMethod = payment.paymentMethod;
+        public Builder setOrder(Order order) {
+            this.order = order;
             return this;
         }
-        public Payment build(){
+        public Builder copy(Payment payment) {
+            this.paymentId = payment.paymentId;
+            this.amount = payment.amount;
+            this.transactionReference = payment.transactionReference;
+            this.paymentStatus = payment.paymentStatus;
+            this.paymentMethod = payment.paymentMethod;
+            this.order = payment.order;
+            return this;
+        }
+        public Payment build() {
             return new Payment(this);
         }
     }
