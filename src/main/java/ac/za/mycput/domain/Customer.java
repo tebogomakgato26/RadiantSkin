@@ -1,5 +1,7 @@
 package ac.za.mycput.domain;
 
+// Tebogo Makgato 230116086
+
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
