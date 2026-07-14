@@ -8,32 +8,48 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomerService implements ICustomerService{
+public class CustomerService implements ICustomerService {
 
-    private CustomerRepository repo;
+    private final CustomerRepository repo;
+
     @Autowired
-    public CustomerService(CustomerRepository repo){
+    public CustomerService(CustomerRepository repo) {
         this.repo = repo;
     }
+
     @Override
-    public Customer create(Customer cust){
-        return this.repo.save(cust);
+    public Customer create(Customer customer) {
+        return this.repo.save(customer);
     }
+
     @Override
     public Customer read(Long id) {
         return this.repo.findById(id).orElse(null);
     }
+
     @Override
-    public Customer update(Customer cust){
-        return this.repo.save(cust);
+    public Customer update(Customer customer) {
+        return this.repo.save(customer);
     }
+
     @Override
     public boolean delete(Long id) {
         this.repo.deleteById(id);
         return true;
     }
+
     @Override
-    public List<Customer> getAll(){
+    public List<Customer> getAll() {
         return this.repo.findAll();
+    }
+
+    @Override
+    public Customer findByEmail(String email) {
+        return this.repo.findByEmail(email);
+    }
+
+    @Override
+    public List<Customer> findByPhoneNumber(String phoneNumber) {
+        return this.repo.findByPhoneNumber(phoneNumber);
     }
 }

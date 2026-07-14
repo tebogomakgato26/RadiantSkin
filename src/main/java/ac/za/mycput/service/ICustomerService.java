@@ -4,7 +4,10 @@ import ac.za.mycput.domain.Customer;
 
 import java.util.List;
 
-public interface ICustomerService extends IService<Customer, Long>{
+public interface ICustomerService extends IService<Customer, Long> {
 
-    List<Customer> getAll();
+    Customer findByEmail(String email);
+
+    List<Customer> findByPhoneNumber(String phoneNumber);
+
 }
