@@ -1,6 +1,8 @@
 package ac.za.mycput.service;
 
 import ac.za.mycput.domain.Payment;
+import ac.za.mycput.domain.PaymentMethod;
+import ac.za.mycput.domain.PaymentStatus;
 import ac.za.mycput.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,20 @@ public class PaymentService implements IPaymentService {
     @Override
     public List<Payment> getAll() {
         return this.repo.findAll();
+    }
+
+    @Override
+    public Payment findByTransactionReference(String transactionReference) {
+        return this.repo.findByTransactionReference(transactionReference);
+    }
+
+    @Override
+    public List<Payment> findByStatus(PaymentStatus status) {
+        return this.repo.findByStatus(status);
+    }
+
+    @Override
+    public List<Payment> findByPaymentMethod(PaymentMethod paymentMethod) {
+        return this.repo.findByPaymentMethod(paymentMethod);
     }
 }
